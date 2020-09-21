@@ -7,11 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.madlevel3task2.adapters.PortalsAdapter
+import com.example.madlevel3task2.classes.Portal
+import kotlinx.android.synthetic.main.fragment_portals.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class PortalsFragment : Fragment() {
+
+    private val portals = arrayListOf<Portal>()
+    private val portalsAdapter = PortalsAdapter(portals)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -23,5 +31,8 @@ class PortalsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        rvPortals.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
+        rvPortals.adapter = portalsAdapter
     }
 }

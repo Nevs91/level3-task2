@@ -1,22 +1,14 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.madlevel3task2.adapters.PortalsAdapter
-import com.example.madlevel3task2.classes.Portal
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_portals.*
 
 class MainActivity : AppCompatActivity() {
-
-    private val portals = arrayListOf<Portal>()
-    private val portalsAdapter = PortalsAdapter(portals)
 
     private lateinit var navController: NavController
 
@@ -29,12 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         // Navigate to the add portal fragment when clicking the button
         fab.setOnClickListener {
-            navController.navigate(
-                    R.id.action_portalsFragment_to_addPortalFragment
-            )
+            navController.navigate(R.id.action_portalsFragment_to_addPortalFragment)
         }
 
-        initViews()
         fabToggler()
     }
 
@@ -52,12 +41,6 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun initViews() {
-        // Initialize the recycler view with a staggeredGridlayout manager and adapter
-        rvPortals.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-        rvPortals.adapter = portalsAdapter
     }
 
     /**
