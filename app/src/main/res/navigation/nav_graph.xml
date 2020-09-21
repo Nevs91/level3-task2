@@ -20,5 +20,12 @@
         android:id="@+id/addPortalFragment"
         android:name="com.example.madlevel3task2.AddPortalFragment"
         android:label="fragment_add_portal"
-        tools:layout="@layout/fragment_add_portal" />
+        tools:layout="@layout/fragment_add_portal" >
+
+        <action
+            android:id="@+id/action_addPortalFragment_to_portalsFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/portalsFragment"
+            app:destination="@id/portalsFragment" />
+    </fragment>
 </navigation>
