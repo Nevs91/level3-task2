@@ -13,5 +13,6 @@
     <string name="label_portal_title">Title</string>
     <string name="label_portal_url">Url</string>
     <string name="button_add_portal">Add portal</string>
-    <string name="not_valid_portal">Invalid portal</string>
+    <string name="invalid_portal">Not all fields are filled in</string>
+    <string name="invalid_url">Invalid URL</string>
 </resources>

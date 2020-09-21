@@ -1,9 +1,11 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
@@ -44,17 +46,24 @@ class AddPortalFragment : Fragment() {
 
         // Check if a title and url is filled in
         if (title.isNotEmpty() && url.isNotEmpty()) {
-            // Create a new bundle with a new parcelable portal instance
-            val bundle = Bundle()
-            bundle.putParcelable(BUNDLE_PORTAL_KEY, Portal(title, url))
 
-            // Set the data as fragmentResult
-            setFragmentResult(REQ_PORTAL_KEY, bundle)
+            // Check if the url matches parts of "RFC 3987"
+            if (Patterns.WEB_URL.matcher(url).matches()) {
 
-            // "pop" the backstack, this means we destroy this fragment and go back to the PortalsFragment
-            findNavController().popBackStack()
+                // Create a new bundle with a new parcelable portal instance
+                val bundle = Bundle()
+                bundle.putParcelable(BUNDLE_PORTAL_KEY, Portal(title, url))
+
+                // Set the data as fragmentResult
+                setFragmentResult(REQ_PORTAL_KEY, bundle)
+
+                // "pop" the backstack, this means we destroy this fragment and go back to the PortalsFragment
+                findNavController().popBackStack()
+            } else {
+                Toast.makeText(activity, R.string.invalid_url, Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(activity, R.string.not_valid_portal, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, R.string.invalid_portal, Toast.LENGTH_SHORT).show()
         }
     }
 }
