@@ -1,11 +1,13 @@
 package com.example.madlevel3task2
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.RecyclerView
@@ -25,8 +27,8 @@ class PortalsFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_portals, container, false)
@@ -47,8 +49,20 @@ class PortalsFragment : Fragment() {
     /**
      * Handle click events from portal items inside the recyclerView
      */
-    private fun partItemClicked(portal : Portal) {
-        TODO("Not yet implemented")
+    private fun partItemClicked(portal: Portal) {
+        val context = requireContext()
+
+        // Use a CustomTabsIntent.Builder to configure CustomTabsIntent.
+        val builder = CustomTabsIntent.Builder()
+
+        // Set toolbar color and/or setting custom actions before invoking build()
+        builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent))
+
+        // Once ready, call the build method to create a CustomTabsIntent
+        val customTabsIntent = builder.build()
+
+        // launch the desired Url
+        customTabsIntent.launchUrl(context, Uri.parse(portal.url))
     }
 
     /**
