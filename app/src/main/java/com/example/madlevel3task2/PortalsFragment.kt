@@ -1,12 +1,12 @@
 package com.example.madlevel3task2
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.madlevel3task2.adapters.PortalsAdapter
@@ -32,7 +32,30 @@ class PortalsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initViews()
+        observeAddPortalResult()
+    }
+
+    private fun initViews() {
         rvPortals.layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         rvPortals.adapter = portalsAdapter
+    }
+
+    /**
+     * Observe the [AddPortalFragment] to listen for new instances of the [Portal] data class and
+     * add retrieved portals to the existing list
+     */
+    private fun observeAddPortalResult() {
+        setFragmentResultListener(REQ_PORTAL_KEY) { _, bundle ->
+            val portal = bundle.getParcelable<Portal>(BUNDLE_PORTAL_KEY)
+
+            // Add the portal when the object is not null
+            if (portal != null) {
+                portals.add(portal)
+                portalsAdapter.notifyDataSetChanged()
+            } else {
+                Log.e("PortalsFragment", "Request triggered, but empty portal object!")
+            }
+        }
     }
 }
